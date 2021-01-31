@@ -1,0 +1,77 @@
+<template>
+
+    <lightning-card title="Object Description">
+        <div if:true={showSpinner} class="slds-is-relative">
+            <lightning-spinner variant="brand"
+                               size="medium"
+                               alternative-text={labels.LOANGDING}
+            ></lightning-spinner>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+
+        <lightning-layout horizontal-align="spread" multiple-rows=true>
+
+            <lightning-layout-item flexibility="auto" padding="around-small" size=12>
+                <lightning-combobox
+                        name="objectName"
+                        label="Object Name"
+                        value={objectApiName}
+                        placeholder="Select object"
+                        options={options}
+                        onchange={handleObjectChange}
+                        required
+                ></lightning-combobox>
+            </lightning-layout-item>
+
+            <lightning-layout-item flexibility="auto" padding="around-small" size=12 if:true={isObjectSelected}>
+                <lightning-card class="slds-grid" title={objectInfo.label} icon-name={iconName}>
+                    <lightning-layout vertical-align="center" horizontal-align="spread" aria-multiline=true>
+                        <template for:each={objectProperties} for:item="property">
+                            <lightning-layout-item key={property.fieldName}
+                                                   flexibility="auto"
+                                                   padding="around-small"
+                                                   size=2
+                                                   if:true={property.isText}>
+                                <lightning-input label={property.label}
+                                                 value={property.value}
+                                                 disabled
+                                                 read-only>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item key={property.fieldName}
+                                                   flexibility="auto"
+                                                   padding="around-small"
+                                                   size=2
+                                                   if:true={property.isBoolean}>
+                                <lightning-input label={property.label}
+                                                 checked={property.value}
+                                                 type="toggle"
+                                                 read-only
+                                                 disabled
+                                                 message-toggle-active=""
+                                                 message-toggle-inactive="">
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-card>
+            </lightning-layout-item>
+
+            <lightning-layout-item flexibility="auto" padding="around-small" size=12 if:true={isObjectSelected}>
+                <lightning-datatable
+                        columns={columns}
+                        data={fields}
+                        key-field="apiName"
+                        show-row-number-column
+                        hide-checkbox-column
+                        onsort={handleSort}
+                        sorted-by={sortedBy}
+                        sorted-direction={sortedDirection}
+                        min-column-width="100">
+                </lightning-datatable>
+            </lightning-layout-item>
+
+        </lightning-layout>
+    </lightning-card>
+
+</template>
