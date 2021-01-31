@@ -36,3 +36,18 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+
+#vs code settings
+.vscode/
+.vim-force.com
+
+
+force-app/main/default/profiles/
+
+.localdevserver/
+
+force-app/main/default/lwc/jsconfig.json
+
+.idea/
+
+IlluminatedCloud/
