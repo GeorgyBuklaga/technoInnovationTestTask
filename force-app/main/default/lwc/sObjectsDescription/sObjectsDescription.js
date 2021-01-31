@@ -185,6 +185,7 @@ export default class SObjectsDescription extends LightningElement {
                         }
                     }
                 );
+                this.options = this.sortData("label", "asc", this.options);
                 this.showSpinner = false;
             })
             .catch(error => {
@@ -236,10 +237,10 @@ export default class SObjectsDescription extends LightningElement {
             sortDirection = event.detail.sortDirection;
         this.sortedBy = fieldName;
         this.sortedDirection = sortDirection;
-        this.sortData(fieldName, sortDirection);
+        this.fields = this.sortData(fieldName, sortDirection, this.fields);
     };
 
-    sortData = (fieldName, sortDirection) => {
+    sortData = (fieldName, sortDirection, listForSort) => {
         let compareFunc = (first, second) => {
             let result = 0;
             if (first[fieldName] < second[fieldName]) {
@@ -261,7 +262,7 @@ export default class SObjectsDescription extends LightningElement {
             };
         }
 
-        this.fields = [...this.fields.sort(compareFunc)];
+        return [...listForSort.sort(compareFunc)];
     };
 
 }
